@@ -1,12 +1,15 @@
-import { useState } from 'react'
+import LoginForm from "./components/LoginForm"
+import LoginInfo from "./components/LoginInfo"
+
 
 function App() {
 
   return (
     <>
-      <h1 className="text-3xl font-bold underline text-[#01b681]">
-        Hello world!
-      </h1>
+      <div className='w-full h-screen grid grid-cols-2'>
+        <LoginInfo />
+        <LoginForm />
+      </div>
     </>
   )
 }
