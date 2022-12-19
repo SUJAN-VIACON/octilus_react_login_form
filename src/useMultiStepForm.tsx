@@ -7,7 +7,7 @@ export interface useInfoType {
     email: string,
     phone: string,
     gender: string,
-    job_title?:string
+    job_title?: string
 }
 
 export function useMultiStepForm(steps: ReactElement[]) {
@@ -18,7 +18,16 @@ export function useMultiStepForm(steps: ReactElement[]) {
 
     const registerAndGoNext = (formValues: useInfoType) => {
         setFormData(formValues);
-        // registerUser(formValues);
+        const response = registerUser(formValues);
+        if (response && !registeredUserId) {
+            response.then((res) => {
+                setRegisteredUserId(res?.data.id)
+            })
+        }
+        goNext();
+    }
+
+    const goNext = () => {
         setCurrentStepIndex((i: number) => {
             if (i == steps.length - 1) return i;
             return i + 1;
@@ -32,12 +41,13 @@ export function useMultiStepForm(steps: ReactElement[]) {
         })
     }
 
-    const registerUser = (userData: useInfoType) => {
-        axios.post(`${process.env.API_URL}/create.php`, userData)
-            .then((res) => console.log(res))
-            .catch(function (error) {
-                console.log(error);
-            });
+    const registerUser = async (userData: useInfoType) => {
+        try {
+            return await axios.post('/api/create.php', userData).then()
+        } catch ($th) {
+            console.log($th)
+        }
+        return;
     }
 
     return {

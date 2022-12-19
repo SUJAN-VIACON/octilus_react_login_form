@@ -1,6 +1,8 @@
 {
   "name": "octilus_react_login_form",
   "private": true,
+  "proxy" : "https://dev.octilus.in",
+  "homepage": "http://localhost:5173",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -11,6 +13,7 @@
   "dependencies": {
     "axios": "^1.2.1",
     "formik": "^2.2.9",
+    "http-proxy-middleware": "^2.0.6",
     "init": "^0.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
