@@ -1,9 +1,9 @@
-import React from 'react'
-import jobBg from '../assets/images/job-bg.jpg';
-import { FaFacebookF ,FaLinkedinIn} from "react-icons/fa";
-import { AiOutlineTwitter,AiOutlineInstagram} from "react-icons/ai";
+import { AiOutlineInstagram, AiOutlineTwitter } from "react-icons/ai";
+import { FaFacebookF, FaLinkedinIn } from "react-icons/fa";
 
-const LoginInfo = () => {
+import jobBg from '../assets/images/job-bg.jpg';
+
+const SideBanner = () => {
     return (
         <div className='relative text-white '>
             <img src={jobBg} alt="" className='w-full h-screen' />
@@ -28,4 +28,4 @@ const LoginInfo = () => {
     )
 }
 
-export default LoginInfo
+export default SideBanner

@@ -1,16 +1,14 @@
-import LoginForm from "./components/LoginForm"
-import LoginInfo from "./components/LoginInfo"
+import { Route, Routes } from "react-router-dom"
 
+import Home from "./pages/Home"
+import Registration from "./pages/Registration"
 
 function App() {
-
   return (
-    <>
-      <div className='w-full h-screen grid grid-cols-2'>
-        <LoginInfo />
-        <LoginForm />
-      </div>
-    </>
+    <Routes>
+      <Route path="/" element={<Registration />} />
+      <Route path="/home" element={<Home />} />
+    </Routes>
   )
 }
 
