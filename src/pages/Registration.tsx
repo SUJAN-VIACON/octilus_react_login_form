@@ -11,9 +11,7 @@ const Registration = () => {
             <div className='w-full h-screen grid grid-cols-2'>
                 <SideBanner />
                 <MultiStepFormProvider
-                    formComponents={
-                        [<UserInfoForm />, <JobInfoForm />]
-                    }
+                    components={[<UserInfoForm />, <JobInfoForm />]}
                 />
             </div>
         </>

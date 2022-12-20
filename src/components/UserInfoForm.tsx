@@ -5,6 +5,7 @@ import Input from './ui/Input'
 import UserRequest from '../Requests/UserRequest'
 import { multiStepFormContext } from '../MultiStepFormProvider'
 import { useContext } from 'react'
+import { useInfoType } from '../useMultiStepForm';
 
 const validationSchema = UserRequest.rules();
 
@@ -12,7 +13,7 @@ const UserInfoForm = () => {
   const multiStepForm = useContext(multiStepFormContext);
   const formData = multiStepForm.state;
 
-  const goToNextStep = (formValues: any) => {
+  const goToNextStep = (formValues: useInfoType) => {
     multiStepForm.dispatch({
       type: 'registerAndGoNext',
       payload: { values: formValues }
@@ -23,7 +24,7 @@ const UserInfoForm = () => {
     <div className='px-20 py-10'>
       <Formik
         initialValues={{ name: formData?.name, email: formData?.email, phone: formData?.phone, gender: formData?.gender }}
-        onSubmit={(values) => goToNextStep(values)}
+        onSubmit={(values: useInfoType) => goToNextStep(values)}
         validationSchema={validationSchema}
       >
         {({ handleChange, handleSubmit, values, errors, touched }) => (

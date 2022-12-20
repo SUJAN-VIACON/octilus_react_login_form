@@ -4,10 +4,10 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
 export interface useInfoType {
-    name: string,
-    email: string,
-    phone: string,
-    gender: string,
+    name?: string,
+    email?: string,
+    phone?: string,
+    gender?: string,
     job_title?: string
 }
 
