@@ -9,11 +9,11 @@ interface InputType {
   type: string,
   handleChange?: any,
   error?: string | null,
-  isChecked?:boolean,
+  isChecked?: boolean,
   props?: React.ReactNode
 }
 
-const Input = ({ label, placeholder, name, value, type, handleChange, error,isChecked, props }: InputType) => {
+const Input = ({ label, placeholder, name, value, type, handleChange, error, isChecked, ...props }: InputType) => {
   return (
     <>
       <div>
