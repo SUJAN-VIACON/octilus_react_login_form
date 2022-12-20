@@ -10,66 +10,76 @@ import Input from './ui/Input'
 import { multiStepFormContext } from '../MultiStepFormProvider'
 
 const validationSchema = yup.object().shape({
-    position: yup.string()
-        .required("Please choose your Position")
+    job_title: yup.string()
+        .required("Please choose your job_title")
 });
+
+interface jobInfoType {
+    job_title: string
+}
 
 const JobInfoForm = () => {
     const multiStepForm = useContext(multiStepFormContext);
-    const submitForm = (formValues: any) => {
-        multiStepForm.dispatch({ type: "registerUser", payload: { value: formValues } })
+
+    const submitForm = (formValues: jobInfoType) => {
+        multiStepForm.dispatch(
+            {
+                type: "updateAndGoHomePage",
+                payload: { values: formValues }
+            }
+        )
     }
 
     return (
         <div className='px-20 py-10'>
             <button className=" text-gray-500 flex items-center gap-2 mb-7 text-lg"
-            onClick={()=>multiStepForm.dispatch({type:"goBack"})}
+                onClick={() => multiStepForm.dispatch({ type: "goBack" })}
             >
                 <BiArrowBack />
                 <span className="uppercase">previous step</span>
             </button>
             <Formik
-                initialValues={{ position: '' }}
-                onSubmit={(values) => submitForm(values)}
+                initialValues={{ job_title: "" }}
+                onSubmit={(values: { job_title: string }) => submitForm(values)}
                 validationSchema={validationSchema}
             >
-                {({ handleChange, handleSubmit, values, errors }) => (
-                    <FormWrapper title='Select Job Position'>
+                {({ handleChange, handleSubmit, values, errors, touched }) => (
+                    <FormWrapper title='Select Job Title'>
                         <hr />
                         <Input type="radio2"
                             label="Frontend Developer"
-                            name="position"
+                            name="job_title"
                             value="Frontend Developer"
                             handleChange={handleChange}
-                            error={errors.position} />
+                             error={errors.job_title && touched.job_title ? errors.job_title : null} />
 
                         <Input type="radio2"
                             label="WordPress Developer"
-                            name="position"
+                            name="job_title"
                             value="WordPress Developer"
                             handleChange={handleChange}
-                            error={errors.position} />
+                             error={errors.job_title && touched.job_title ? errors.job_title : null} />
 
                         <Input type="radio2"
                             label="UI/UX Designer"
-                            name="position"
+                            name="job_title"
                             value="UI/UX Designer"
                             handleChange={handleChange}
-                            error={errors.position} />
+                             error={errors.job_title && touched.job_title ? errors.job_title : null} />
 
                         <Input type="radio2"
                             label="Support Engineer"
-                            name="position"
+                            name="job_title"
                             value="Support Engineer"
                             handleChange={handleChange}
-                            error={errors.position} />
+                             error={errors.job_title && touched.job_title ? errors.job_title : null} />
 
                         <Input type="radio2"
                             label="Graphic Designer"
-                            name="position"
+                            name="job_title"
                             value="Graphic Designer"
                             handleChange={handleChange}
-                            error={errors.position} />
+                             error={errors.job_title && touched.job_title ? errors.job_title : null} />
 
                         <Button title='SUBMIT' type="submit" handleOnClick={handleSubmit} />
                     </FormWrapper>

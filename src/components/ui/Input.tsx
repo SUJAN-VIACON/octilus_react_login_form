@@ -79,7 +79,7 @@ const Input = ({ label, placeholder, name, value, type, handleChange, error,isCh
                 <div className='relative'>
                   <div className='flex items-center gap-5 p-5 border-2 border-gray-200 w-36 rounded'>
                     <input
-                      type="radio" className='w-5 h-5'
+                      type="radio" className='w-5 h-5 accent-primary'
                       value={value}
                       name={name}
                       id={`name-${label}`}

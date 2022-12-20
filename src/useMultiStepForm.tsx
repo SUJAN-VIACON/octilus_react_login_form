@@ -1,6 +1,7 @@
 import { ReactElement, useState } from "react";
 
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 export interface useInfoType {
     name: string,
@@ -10,21 +11,37 @@ export interface useInfoType {
     job_title?: string
 }
 
-export function useMultiStepForm(steps: ReactElement[]) {
+interface createResponseType {
+    success: boolean,
+    id: string,
+}
 
+export function useMultiStepForm(steps: ReactElement[]) {
+    const navigate = useNavigate();
     const [currentStepIndex, setCurrentStepIndex] = useState(0);
     const [formData, setFormData] = useState({});
     const [registeredUserId, setRegisteredUserId] = useState();
 
-    const registerAndGoNext = (formValues: useInfoType) => {
+    const registerAndGoNext = async (formValues: useInfoType) => {
         setFormData(formValues);
-        const response = registerUser(formValues);
-        if (response && !registeredUserId) {
-            response.then((res) => {
-                setRegisteredUserId(res?.data.id)
-            })
+        const response: createResponseType | any = await createUser(formValues);
+        if (response && response?.data?.success && !registeredUserId) {
+            setRegisteredUserId(response.data.id)
         }
+
         goNext();
+    }
+
+    const updateAndGoHomePage = async (formValues: { job_title: string }) => {
+        setFormData((e: useInfoType) => {
+            return { ...e, ...formValues }
+        })
+        const response = await updateUser(formValues);
+        if (!response || !response?.data?.success) {
+            return alert("something went wrong");
+        }
+
+        return navigate("/home");
     }
 
     const goNext = () => {
@@ -41,11 +58,23 @@ export function useMultiStepForm(steps: ReactElement[]) {
         })
     }
 
-    const registerUser = async (userData: useInfoType) => {
+    const createUser = (userData: useInfoType) => {
         try {
-            return await axios.post('/api/create.php', userData).then()
-        } catch ($th) {
-            console.log($th)
+            return axios.post('/api/create.php', userData)
+        } catch (error) {
+            console.log(error)
+        }
+        return;
+    }
+
+    const updateUser = (data: { job_title: string }) => {
+        if (!registeredUserId) goBack();
+
+        const updateData = { id: registeredUserId, ...data };
+        try {
+            return axios.post('/api/update.php', updateData).then()
+        } catch (error) {
+            console.log(error)
         }
         return;
     }
@@ -55,8 +84,8 @@ export function useMultiStepForm(steps: ReactElement[]) {
         step: steps[currentStepIndex],
         steps,
         registerAndGoNext,
+        updateAndGoHomePage,
         goBack,
         formData,
-        registerUser
     }
 }

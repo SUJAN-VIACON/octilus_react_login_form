@@ -26,17 +26,20 @@ const UserInfoForm = () => {
         onSubmit={(values) => goToNextStep(values)}
         validationSchema={validationSchema}
       >
-        {({ handleChange, handleSubmit, values, errors }) => (
+        {({ handleChange, handleSubmit, values, errors, touched }) => (
 
           <FormWrapper title='Personal information'>
             <Input type="text" value={values.name} placeholder="Name" name="name"
-              handleChange={handleChange("name")} error={errors.name}
+              handleChange={handleChange("name")}
+              error={errors.name && touched.name ? errors.name : null}
             />
             <Input type="email" value={values.email} placeholder="Email Address"
-              name="email" handleChange={handleChange("email")} error={errors.email}
+              name="email" handleChange={handleChange("email")}
+              error={errors.email && touched.email ? errors.email : null}
             />
             <Input type="number" value={values.phone} placeholder="Phone" name="number"
-              handleChange={handleChange("phone")} error={errors.phone}
+              handleChange={handleChange("phone")}
+              error={errors.phone && touched.phone ? errors.phone : null}
             />
 
             <div className='space-y-5 text-lg'>
@@ -44,11 +47,13 @@ const UserInfoForm = () => {
               <div className='flex gap-5'>
                 <Input type="radio" value="male" label="Male" name="gender"
                   isChecked={formData?.gender == "male"}
-                  handleChange={handleChange("gender")} error={errors.gender}
+                  handleChange={handleChange("gender")}
+                  error={errors.gender && touched.gender ? errors.gender : null}
                 />
                 <Input type="radio" value="female" label="Female" name="gender"
                   isChecked={formData?.gender == "female"}
-                  handleChange={handleChange("gender")} error={errors.gender}
+                  handleChange={handleChange("gender")}
+                  error={errors.gender && touched.gender ? errors.gender : null}
                 />
               </div>
             </div>

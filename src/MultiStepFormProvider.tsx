@@ -6,7 +6,6 @@ import { useMultiStepForm } from "./useMultiStepForm";
 interface providerType {
     formComponents: ReactElement[],
 }
-
 interface contextType {
     state?: useInfoType,
     dispatch?: any
@@ -16,7 +15,7 @@ export const multiStepFormContext = createContext<contextType>({});
 
 export const MultiStepFormProvider = ({ formComponents }: providerType) => {
 
-    const { step, registerAndGoNext, goBack, formData } = useMultiStepForm(formComponents);
+    const { step, registerAndGoNext, updateAndGoHomePage, goBack, formData } = useMultiStepForm(formComponents);
 
     const multiStepFormReducer = (state: any, action: any) => {
         switch (action.type) {
@@ -26,15 +25,15 @@ export const MultiStepFormProvider = ({ formComponents }: providerType) => {
             case 'goBack':
                 goBack();
                 return formData
-            case 'registerUser':
-                return
+            case 'updateAndGoHomePage':
+                updateAndGoHomePage(action.payload.values)
             default:
                 return formData;
         }
     }
 
     const [state, dispatch]: any = useReducer(multiStepFormReducer, formData);
-    
+
     return (
         <multiStepFormContext.Provider value={{ state, dispatch }} >
             {step}
